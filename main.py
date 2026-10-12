@@ -7,7 +7,7 @@ print("-" * 100)
 TOEGANGSTICKET = 18.50
 CONSUMPTIE = 6.50
 GOKBELASTING = 3.33
-VASTEKOSTEN = TOEGANGSTICKET + CONSUMPTIE + GOKBELASTING
+VASTE_KOSTEN = TOEGANGSTICKET + CONSUMPTIE + GOKBELASTING
 MIN_BUDGET = 25
 MIN_AGE = 18
 
@@ -36,7 +36,7 @@ else:
 
 #Budget speler vragen ,checken en weergeven
 starting_budget = float(input("Voer uw budget in:€ "))
-balance = starting_budget - VASTEKOSTEN
+balance = starting_budget - VASTE_KOSTEN
 
 print(f"""
 Casino de Gouden Draak
