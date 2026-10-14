@@ -75,6 +75,26 @@ def show_account(salutation, birthdate, age):
     -----------------------------------------
     """)
 
+def show_games_menu():
+    print("""
+    ---------------
+    1.Fruitmachine
+    2.Roulette
+    0.Terug
+    ---------------
+    """)
+
+def show_main_menu():
+        print("""
+        ------------
+        1.Spellen
+        2.Saldo
+        3.Account
+        0.Stop
+        ------------
+        """)
+
+
 def main():
     # welkomstbanner
     print("-" * 100)
@@ -118,24 +138,6 @@ def main():
             exit(1)
 
 
-def show_games_menu():
-    print("""
-    ---------------
-    1.Fruitmachine
-    2.Roulette
-    0.Terug
-    ---------------
-    """)
-
-def show_main_menu():
-        print("""
-        ------------
-        1.Spellen
-        2.Saldo
-        3.Account
-        0.Stop
-        ------------
-        """)
 
 main()
 

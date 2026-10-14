@@ -7,6 +7,18 @@ def stake(inzet, balance):
         balance -= float(inzet)
     return balance, inzet
 
+def determine_rolls(round_number):
+    if round_number % 5 == 1 :
+        return "kers", "citroen", "ster"
+    elif round_number % 5 == 2 :
+        return "kers", "kers", "kers"
+    elif round_number % 5 == 3 :
+        return "ster", "ster", "citroen"
+    elif round_number % 5 == 4 :
+        return "citroen", "kers", "ster"
+    elif round_number % 5 == 5 :
+        return "ster", "ster", "ster"
+
 
 def play(balance):
 
@@ -19,7 +31,7 @@ def play(balance):
         print("""
         1. Spelen
         0. Stop""")
-        choice = int(input("Kies 1 of 0:"))
+        choice = int(input("Kies 0 of 1 :"))
         if not choice == 0 and not choice == 1:
             print("Voer een geldige keuze in!")
             continue
@@ -28,12 +40,13 @@ def play(balance):
         elif choice == 1:
             balance, inzet = stake(float(input("Hoeveel wilt u inzetten? :")), balance)
 
+        determine_rolls(round_number)
 
 
 
+balance = 500
 
-
-
+play(balance)
 
 
 
