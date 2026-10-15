@@ -10,14 +10,17 @@ def show_options():
     choice = int(input("Kies uw gok (0 om te stoppen) :"))
     return choice
 
-def stake(inzet, balance):
-    if float(inzet) <= 0:
-        print("Inzet mag geen 0 of minder dan 0 zijn!")
-    elif float(inzet) > balance:
-        print("U kan niet meer inzetten dan u heeft!")
-    else:
-        balance -= float(inzet)
-    return balance, inzet
+def stake(balance):
+    while True:
+        inzet =float((input("Hoeveel wilt u inzetten? :")))
+        if inzet <= 0:
+            print("Inzet mag geen 0 of minder dan 0 zijn!")
+            continue
+        elif inzet > balance:
+            print("U kan niet meer inzetten dan u heeft!")
+            continue
+        else:
+            return inzet
 
 def win_or_lose(choice, color, odd_even):
     if choice == 1 and color == "Rood":
@@ -44,7 +47,8 @@ def play(balance):
             continue
         elif choice == 0:
             return balance
-        balance, inzet = stake(float(input("Hoeveel wilt u inzetten? :")), balance)
+        inzet = stake(balance)
+        balance -= inzet
 
         spin = (round_number * 7) % 37
 
@@ -72,7 +76,7 @@ def play(balance):
         print(f"De bal valt op {color} {spin}.")
         if win:
             balance += inzet * 2
-            print(f"U hebt gewonnen! Uw wint {inzet:.2f}!")
+            print(f"U hebt gewonnen! U wint {inzet:.2f}!")
             print(f"Nieuw saldo: {balance:.2f}")
 
         else:

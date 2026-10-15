@@ -23,7 +23,7 @@ def check_age():
             continue
         age = calculate_age(birthday)
         if age < MIN_AGE:
-            print(f"u bent nog geen {MIN_AGE}! Toegang is vanaf 18 jaar, tot ziens.")
+            print(f"u bent nog geen {MIN_AGE}! Toegang is vanaf {MIN_AGE} jaar, tot ziens.")
             exit(1)
         else:
             return birthday
@@ -96,10 +96,6 @@ def show_main_menu():
 
 
 def main():
-    # welkomstbanner
-    print("-" * 100)
-    print(" " * 32 + "WELKOM BIJ CASINO DE GOUDEN DRAAK")
-    print("-" * 100)
 
     #input vragen aan de speler
     salutation = determine_salutation(input("Voer uw naam in : ").title(), input("Voer uw geslacht in (Man/Vrouw/Anders): ").title())
@@ -111,34 +107,41 @@ def main():
 
     show_welcome_message(starting_budget, balance, salutation)
     while True:
+        if balance < 1 :
+            print(f"""Bedankt voor uw bezoek!
+                    Eindsaldo: {balance}""")
+            exit(0)
         show_main_menu()
 
         choice = int(input("Maak uw keuze: "))
         if choice < 0 or choice > 3:
             print("Kies een nummer van 0 tm 3!")
-            break
+            continue
         elif choice == 1:
             show_games_menu()
             choice = int(input("Maak uw keuze: "))
             if choice < 0 or choice > 2:
                 print("Kies een nummer van 0 tm 2!")
             elif choice == 1:
-                Fruitmachine.play(balance)
+                balance = Fruitmachine.play(balance)
             elif choice == 2:
                 balance = roulette.play(balance)
-            elif choice == 0:
-                show_main_menu()
+
         elif choice == 2:
             show_balance(balance)
         elif choice == 3:
             show_account(salutation, birthdate, age)
         elif choice == 0:
             print(f"""Bedankt voor uw bezoek!
-        Eindsaldo: {balance}""")
-            exit(1)
+        Eindsaldo: {balance:.2f}""")
+            exit(0)
 
 
 
+# welkomstbanner
+print("-" * 100)
+print(" " * 32 + "WELKOM BIJ CASINO DE GOUDEN DRAAK")
+print("-" * 100)
 main()
 
 
