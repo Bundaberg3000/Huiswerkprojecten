@@ -1,127 +1,147 @@
-#welkomstboodschap
-print("-" * 100)
-print(" " * 32 + "WELKOM BIJ CASINO DE GOUDEN DRAAK")
-print("-" * 100)
+from Games import roulette
+from Games import Fruitmachine
 
 #declareren constanten
 TOEGANGSTICKET = 18.50
 CONSUMPTIE = 6.50
 GOKBELASTING = 3.33
-VASTEKOSTEN = TOEGANGSTICKET + CONSUMPTIE + GOKBELASTING
+VASTE_KOSTEN = TOEGANGSTICKET + CONSUMPTIE + GOKBELASTING
 MIN_BUDGET = 25
 MIN_AGE = 18
+CURRENT_YEAR = 2026
 
-#input vragen aan de speler
-player_name = input("Voer uw naam in : ").title()
-player_gender = input("Voer uw geslacht in (Man/Vrouw/Anders): ").title()
-player_birthday = input("Voer uw geboortedatum in (dd-mm-yyyy): ")
+def calculate_age(birthday):
+    birth_day, birth_month, birth_year = birthday.split("-")
+    age = CURRENT_YEAR - int(birth_year)
+    return age
 
-#Bepalen leeftijd en checken of speler 18+ is
-birth_day, birth_month, birth_year = player_birthday.split("-")
+def check_age():
+    while True:
+        birthday = input("Voer je geboortedatum in (dd-mm-jjjj): ")
+        if not birthday.count("-") == 2:
+            print("Voer een geldige datum in aub.")
+            continue
+        age = calculate_age(birthday)
+        if age < MIN_AGE:
+            print(f"u bent nog geen {MIN_AGE}! Toegang is vanaf {MIN_AGE} jaar, tot ziens.")
+            exit(1)
+        else:
+            return birthday
 
-age = 2026 - int(birth_year)
-if age < MIN_AGE:
-    print(f"Je bent nog geen {MIN_AGE}! Toegang is vanaf 18 jaar, tot ziens.")
-    exit(1)
 
-starting_budget = float(input("Voer uw budget in:€ "))
+def determine_salutation(player_name,player_gender):
+    if player_gender == "Man":
+        salutation  = f"Meneer {player_name}"
+    elif player_gender == "Vrouw":
+        salutation = f"Mevrouw {player_name}"
+    else:
+        salutation = f"Gast {player_name}"
 
-#Aanspreek vorm bepalen
-if player_gender == "Man":
-    player_title = f"Meneer {player_name}"
-elif player_gender == "Vrouw":
-    player_title = f"Mevrouw {player_name}"
-else:
-    player_title = f"Gast {player_name}"
+    return salutation
 
-#Budget speler vragen ,checken en weergeven
-starting_budget = float(input("Voer uw budget in:€ "))
-balance = starting_budget - VASTEKOSTEN
+def show_welcome_message(starting_budget, balance, salutation):
+    print(f"""
+    Casino de Gouden Draak
+    --------------------------------
+    Startbudget:    €{starting_budget:.2f}
+    Toegangsticket: €{TOEGANGSTICKET:.2f}
+    Consumptie:     €{CONSUMPTIE:.2f}
+    Gokbelasting:   €{GOKBELASTING:.2f}
+    --------------------------------
+    Saldo:          €{balance:.2f}
 
-print(f"""
-Casino de Gouden Draak
---------------------------------
-Startbudget:    €{starting_budget:.2f}
-Toegangsticket: €{TOEGANGSTICKET:.2f}
-Consumptie:     €{CONSUMPTIE:.2f}
-Gokbelasting:   €{GOKBELASTING:.2f}
-Saldo:          €{balance:.2f}
+    """)
+    if balance >= MIN_BUDGET:
+        print(f"{salutation}, u heeft genoeg budget om te gokken, welkom in ons casino!")
+    else:
+        print(f"{salutation}, u heeft helaas niet genoeg budget om te gokken, tot ziens!")
+        exit(1)
 
-""")
-#Bepalen of de spelere genoeg budget heeft om te gokken
-if  balance >= MIN_BUDGET:
-    print(f"{player_title}, u heeft genoeg budget om te gokken, welkom in ons casino!")
-else:
-    print(f"{player_title}, u heeft helaas niet genoeg budget om te gokken, tot ziens!")
-    exit(1)
+def show_balance(balance):
+    print(f"""
+    Saldo informatie
+    ---------------------------
+    Huidig saldo:   €{balance:.2f}
+    ---------------------------
+    """)
 
-#Het casino spel
-round_number = 1
+def show_account(salutation, birthdate, age):
+    print(f"""
+    Account info
+    -----------------------------------------
+    Naam:           {salutation}
+    Geboortedatum:  {birthdate}
+    leeftijd:       {age}
+    -----------------------------------------
+    """)
 
-while True:
+def show_games_menu():
     print("""
-    1:  Rood
-    2:  Zwart
-    3:  Even
-    4:  Oneven
-    0:  Stop""")
-    choice = int(input("Kies je gok (0 om te stoppen) :"))
-    if choice < 0 or choice > 4:
-        print("Voer een geldige keuze in!")
-        continue
-    if choice == 0:
-        break
-    stake = float(input("Hoeveel wil je inzetten? :"))
-    if stake <= 0:
-        print("Inzet mag geen 0 of minder dan 0 zijn!")
-        continue
-    if stake > balance:
-        print("Je kan niet meer inzetten dan je hebt!")
-        continue
-    balance -= stake
-    spin = (round_number * 7) % 37
-    if spin == 0:
-        color = "Groen"
-        odd_even = None
-    elif spin <= 18:
-        if spin % 2 == 0:
-            color = "Zwart"
-            odd_even = "Even"
-        else:
-            color = "Rood"
-            odd_even = "Oneven"
-    else:
-        if spin % 2 == 0:
-            color = "Rood"
-            odd_even = "Even"
-        else:
-            color = "Zwart"
-            odd_even = "Oneven"
-    #bepalen of de speler gewonnen heeft en nieuw saldo bepalen
-    win = False
-    if choice == 1 and color == "Rood":
-        win = True
-    elif choice == 2 and color == "Zwart":
-        win = True
-    elif choice == 3 and odd_even == "Even":
-        win = True
-    elif choice == 4 and odd_even == "Oneven":
-        win = True
-    print(f"De bal valt op {color} {spin}.")
-    if win:
-        balance += stake * 2
-        print(f"Je hebt gewonnen! Je wint {stake:.2f}!")
-        print(f"Nieuw saldo: {balance:.2f}")
-    else:
-        print("Je verliest je inzet!")
-        print(f"Nieuw saldo: {balance:.2f}")
-    #Bepalen of de speler zijn geld op is en stoppen van het spel
-    if balance  < 1:
-        print("Je geld is op, DOEI!")
-        break
-    round_number += 1
+    ---------------
+    1.Fruitmachine
+    2.Roulette
+    0.Terug
+    ---------------
+    """)
+
+def show_main_menu():
+        print("""
+        ------------
+        1.Spellen
+        2.Saldo
+        3.Account
+        0.Stop
+        ------------
+        """)
 
 
-#exit boodschap
-print(f"Eindsaldo: {balance:.2f}")
-print(f"{player_title} bedankt voor het spelen en tot ziens!")
+def main():
+
+    #input vragen aan de speler
+    salutation = determine_salutation(input("Voer uw naam in : ").title(), input("Voer uw geslacht in (Man/Vrouw/Anders): ").title())
+    birthdate = check_age()
+    starting_budget = float(input("Voer uw budget in:€ "))
+
+    balance = starting_budget - VASTE_KOSTEN
+    age = calculate_age(str(birthdate))
+
+    show_welcome_message(starting_budget, balance, salutation)
+    while True:
+        if balance < 1 :
+            print(f"""Bedankt voor uw bezoek!
+                    Eindsaldo: {balance}""")
+            exit(0)
+        show_main_menu()
+
+        choice = int(input("Maak uw keuze: "))
+        if choice < 0 or choice > 3:
+            print("Kies een nummer van 0 tm 3!")
+            continue
+        elif choice == 1:
+            show_games_menu()
+            choice = int(input("Maak uw keuze: "))
+            if choice < 0 or choice > 2:
+                print("Kies een nummer van 0 tm 2!")
+            elif choice == 1:
+                balance = Fruitmachine.play(balance)
+            elif choice == 2:
+                balance = roulette.play(balance)
+
+        elif choice == 2:
+            show_balance(balance)
+        elif choice == 3:
+            show_account(salutation, birthdate, age)
+        elif choice == 0:
+            print(f"""Bedankt voor uw bezoek!
+        Eindsaldo: {balance:.2f}""")
+            exit(0)
+
+
+
+# welkomstbanner
+print("-" * 100)
+print(" " * 32 + "WELKOM BIJ CASINO DE GOUDEN DRAAK")
+print("-" * 100)
+main()
+
+
