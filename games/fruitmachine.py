@@ -1,4 +1,4 @@
-from Games import Stake
+from games import stake
 
 
 def determine_rolls(round_number):
@@ -39,7 +39,7 @@ def play(balance):
         elif choice == 0:
             return balance
 
-        inzet = Stake.stake(balance)
+        inzet = stake.stake(balance)
         balance -= inzet
 
         roll1, roll2, roll3, = determine_rolls(round_number)

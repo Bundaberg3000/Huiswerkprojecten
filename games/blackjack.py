@@ -1,5 +1,5 @@
 import random
-from Games import Stake
+from games import stake
 
 SUITS = ["♠", "♥", "♦", "♣"]
 RANKS = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"]
@@ -58,9 +58,8 @@ def play_blackjack(balance):
                 print("Uw geld is op! Doei!")
                 print(f"Eindsaldo: {balance:.2f}")
                 exit(0)
-            print("""
-                1. Spelen
-                0. Stop""")
+            print("1. Spelen")
+            print("0. Stop")
             choice = int(input("Kies 0 of 1 :"))
             if not choice == 0 and not choice == 1:
                 print("Voer een geldige keuze in!")
@@ -69,7 +68,7 @@ def play_blackjack(balance):
                 print(f"Uw saldo na blackjack: {balance:.2f}")
                 return balance
 
-            inzet = Stake.stake(balance)
+            inzet = stake.stake(balance)
             balance -= inzet
             deck = create_deck()
             player_hand = []
@@ -107,9 +106,9 @@ def play_blackjack(balance):
                     show_hand(None, player_hand)
                     break
             if not player_score > 21:
-                print("""
-                Dealers beurt
-                """)
+                print("-------------")
+                print("Dealers beurt")
+                print("-------------")
                 show_hand(dealer_hand, None, False)
                 dealer_score = total_score(dealer_hand)
                 print(f"Dealer score: {dealer_score}")
@@ -128,10 +127,8 @@ def play_blackjack(balance):
                         print("Dealer BUST")
                         show_hand(dealer_hand, None, False)
                         break
-                print(f"""
-        Uw score :      {player_score}
-        Dealer score :  {dealer_score}
-        """)
+                print(f"Uw score :      {player_score}")
+                print(f"Dealer score :  {dealer_score}")
                 if dealer_score > 21:
                     balance += inzet * 2
                     print(f"U wint 2x uw inzet!")

@@ -1,4 +1,4 @@
-from Games import Stake
+from games import stake
 
 #Het casino spel
 
@@ -35,7 +35,7 @@ def play(balance):
             continue
         elif choice == 0:
             return balance
-        inzet = Stake.stake(balance)
+        inzet = stake.stake(balance)
         balance -= inzet
 
         spin = (round_number * 7) % 37
