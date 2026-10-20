@@ -1,5 +1,6 @@
 from Games import roulette
 from Games import Fruitmachine
+from Games import Blackjack
 
 #declareren constanten
 TOEGANGSTICKET = 18.50
@@ -80,6 +81,7 @@ def show_games_menu():
     ---------------
     1.Fruitmachine
     2.Roulette
+    3.Blackjack
     0.Terug
     ---------------
     """)
@@ -93,7 +95,6 @@ def show_main_menu():
         0.Stop
         ------------
         """)
-
 
 def main():
 
@@ -120,12 +121,17 @@ def main():
         elif choice == 1:
             show_games_menu()
             choice = int(input("Maak uw keuze: "))
-            if choice < 0 or choice > 2:
-                print("Kies een nummer van 0 tm 2!")
+            if choice < 0 or choice > 3:
+                print("Kies een nummer van 0 tm 3!")
             elif choice == 1:
                 balance = Fruitmachine.play(balance)
             elif choice == 2:
                 balance = roulette.play(balance)
+            elif choice == 3:
+                balance = Blackjack.play_blackjack(balance)
+            else:
+                print("Voer een geldige keuze in!")
+                continue
 
         elif choice == 2:
             show_balance(balance)

@@ -1,3 +1,5 @@
+from Games import Stake
+
 #Het casino spel
 
 def show_options():
@@ -9,18 +11,6 @@ def show_options():
             0:  Stop""")
     choice = int(input("Kies uw gok (0 om te stoppen) :"))
     return choice
-
-def stake(balance):
-    while True:
-        inzet =float((input("Hoeveel wilt u inzetten? :")))
-        if inzet <= 0:
-            print("Inzet mag geen 0 of minder dan 0 zijn!")
-            continue
-        elif inzet > balance:
-            print("U kan niet meer inzetten dan u heeft!")
-            continue
-        else:
-            return inzet
 
 def win_or_lose(choice, color, odd_even):
     if choice == 1 and color == "Rood":
@@ -36,8 +26,6 @@ def win_or_lose(choice, color, odd_even):
     return win
 
 
-
-
 def play(balance):
     round_number = 1
     while True:
@@ -47,7 +35,7 @@ def play(balance):
             continue
         elif choice == 0:
             return balance
-        inzet = stake(balance)
+        inzet = Stake.stake(balance)
         balance -= inzet
 
         spin = (round_number * 7) % 37

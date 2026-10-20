@@ -1,14 +1,5 @@
-def stake(balance):
-    while True:
-        inzet =float((input("Hoeveel wilt u inzetten? :")))
-        if inzet <= 0:
-            print("Inzet mag geen 0 of minder dan 0 zijn!")
-            continue
-        elif inzet > balance:
-            print("U kan niet meer inzetten dan u heeft!")
-            continue
-        else:
-            return inzet
+from Games import Stake
+
 
 def determine_rolls(round_number):
     if round_number % 5 == 1 :
@@ -48,7 +39,7 @@ def play(balance):
         elif choice == 0:
             return balance
 
-        inzet = stake(balance)
+        inzet = Stake.stake(balance)
         balance -= inzet
 
         roll1, roll2, roll3, = determine_rolls(round_number)
