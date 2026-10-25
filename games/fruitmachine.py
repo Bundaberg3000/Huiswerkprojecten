@@ -1,5 +1,4 @@
-from games import stake
-
+from games import helper_functions
 
 def determine_rolls(round_number):
     if round_number % 5 == 1 :
@@ -39,7 +38,7 @@ def play(balance):
         elif choice == 0:
             return balance
 
-        inzet = stake.stake(balance)
+        inzet = helper_functions.stake(balance)
         balance -= inzet
 
         roll1, roll2, roll3, = determine_rolls(round_number)
@@ -57,9 +56,7 @@ def play(balance):
         if balance < 1:
             print("Uw geld is op! Doei!")
             return balance
-
         round_number += 1
-    return balance
 
 
 

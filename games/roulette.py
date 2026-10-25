@@ -1,5 +1,4 @@
-from games import stake
-
+from games import helper_functions
 #Het casino spel
 
 def show_options():
@@ -35,7 +34,7 @@ def play(balance):
             continue
         elif choice == 0:
             return balance
-        inzet = stake.stake(balance)
+        inzet = helper_functions.stake(balance)
         balance -= inzet
 
         spin = (round_number * 7) % 37
@@ -75,7 +74,6 @@ def play(balance):
             print("Uw geld is op, DOEI!")
             break
         round_number += 1
-
 
     #exit boodschap
     print(f"Eindsaldo: {balance:.2f}")

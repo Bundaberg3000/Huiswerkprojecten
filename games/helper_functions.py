@@ -9,3 +9,5 @@ def stake(balance):
             continue
         else:
             return inzet
+
+
